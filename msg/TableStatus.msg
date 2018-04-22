@@ -1,0 +1,7 @@
+string tablename
+int64 row0
+int64 row1
+int64 col0
+int64 col1
+int64 maxnum
+bool ins
