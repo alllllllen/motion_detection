@@ -1,18 +1,22 @@
 {
     "table1": {
+        "id": 1,
         "row0": 0,
         "row1": 200,
         "col0": 0,
         "col1": 200,
         "maxnum": 1,
+        "preorder": false,
         "ins": false
     },
     "table2": {
+        "id": 2,
         "row0": 200,
         "row1": 300,
         "col0": 200,
         "col1": 300,
         "maxnum": 2,
+        "preorder": false,        
         "ins": false
     }
 }

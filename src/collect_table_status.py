@@ -2,44 +2,37 @@
 import os
 import json
 import rospy
-import cv2
 import numpy as np
-from cv_bridge import CvBridge, CvBridgeError
+import message_filters
 from sensor_msgs.msg import Image
-from std_msgs.msg import String ,Bool
+from std_msgs.msg import String, Bool, Int8
+from motion_detection.msg import TableStatus
+from motion_detection.msg import Tables
+from motion_detection.msg import FreeList
 
-status_of_table = {
-
-}
-
-class SubscriberTableStatus:
-    def __init__(self, table):
-        self.table = table
-        rospy.Subscriber("table/info_"+table, Bool, self.statusCallback)
-    def statusCallback(self, boolen):
-        if boolen :
-            status_of_table[self.table]["in"] = True
-        else:
-            status_of_table[self.table]["in"] = False
-
-class PublisherTableStatus:
-    def __init__(self):
-        self.pub = rospy.Publisher("table/freetable", Bool, queue_size=2)
-        
-
+status_of_table = {}
+subs = []
+x = []
+def callback(*kwargs):
+    pub = rospy.Publisher('table/info', Tables, queue_size=2)
+    freelist = Tables()
+    for tablestatus in kwargs:
+        if (tablestatus.ins == False) and (tablestatus.preorder == False):
+            freelist.tables.append(tablestatus)
+    pub.publish(freelist)
 
 def main():
     path = os.path.dirname(__file__)
     with open(path+"/info_table.json", "r") as reader:
-    # with open("/home/allen/dashgo_ws/src/motion_detection/src/info_table.json", "r") as reader:
         status_of_table = json.loads(reader.read())
-    rospy.init_node("collect_table_status_node")    
+    rospy.init_node("Collect_Table_Status_node")
     list_of_table = status_of_table.keys()
-    for i in range(len(status_of_table)):
-        SubscriberTableStatus(list_of_table[i])
-
+    for table in list_of_table:
+        subs.append(message_filters.Subscriber("/table/info_"+table, TableStatus))
+    # ts = message_filters.TimeSynchronizer(subs, 3)
+    ts = message_filters.ApproximateTimeSynchronizer(subs, 10, 0.1)
+    ts.registerCallback(callback)
     rospy.spin()
-    # print(status_of_table)
 
 if __name__ == '__main__':
     main()

@@ -53,6 +53,8 @@ find_package(catkin REQUIRED COMPONENTS
    FILES
    Tables.msg
    TableStatus.msg
+   FreeList.msg
+   List.msg
  )
 
 ## Generate services in the 'srv' folder

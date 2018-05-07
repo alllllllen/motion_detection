@@ -71,15 +71,17 @@ if __name__ == '__main__':
     with open(path+"/info_table.json", "r") as reader:
         info_of_table = json.loads(reader.read())
     list_of_table = info_of_table.keys()
-    for i in range(len(list_of_table)):
+    for table in list_of_table:
         tableStatus = TableStatus()
-        tableStatus.tablename = list_of_table[i]
-        tableStatus.row0 = info_of_table[list_of_table[i]]["row0"]
-        tableStatus.row1 = info_of_table[list_of_table[i]]["row1"]
-        tableStatus.col0 = info_of_table[list_of_table[i]]["col0"]
-        tableStatus.col1 = info_of_table[list_of_table[i]]["col1"]
-        tableStatus.maxnum = info_of_table[list_of_table[i]]["maxnum"]
-        tableStatus.ins = info_of_table[list_of_table[i]]["ins"]
+        tableStatus.tablename = table
+        tableStatus.id = info_of_table[table]["id"]
+        tableStatus.row0 = info_of_table[table]["row0"]
+        tableStatus.row1 = info_of_table[table]["row1"]
+        tableStatus.col0 = info_of_table[table]["col0"]
+        tableStatus.col1 = info_of_table[table]["col1"]
+        tableStatus.maxnum = info_of_table[table]["maxnum"]
+        tableStatus.preorder = info_of_table[table]["preorder"]
+        tableStatus.ins = info_of_table[table]["ins"]
         # tables.tables.append(tableStatus)
-        Motion(list_of_table[i], tableStatus)
+        Motion(table, tableStatus)
     rospy.spin()
