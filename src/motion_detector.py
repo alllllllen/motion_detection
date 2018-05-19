@@ -82,6 +82,8 @@ if __name__ == '__main__':
         tableStatus.maxnum = info_of_table[table]["maxnum"]
         tableStatus.preorder = info_of_table[table]["preorder"]
         tableStatus.ins = info_of_table[table]["ins"]
+        tableStatus.distance = info_of_table[table]["distance"]
+        tableStatus.priority = info_of_table[table]["priority"]
         # tables.tables.append(tableStatus)
         Motion(table, tableStatus)
     rospy.spin()

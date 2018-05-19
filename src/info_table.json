@@ -1,5 +1,5 @@
 {
-    "table1": {
+    "TABLE1": {
         "id": 1,
         "row0": 0,
         "row1": 200,
@@ -7,16 +7,44 @@
         "col1": 200,
         "maxnum": 1,
         "preorder": false,
-        "ins": false
+        "ins": false,
+        "distance": 6.358166292,
+        "priority": 2
     },
-    "table2": {
+    "TABLE2": {
         "id": 2,
         "row0": 200,
         "row1": 300,
         "col0": 200,
         "col1": 300,
+        "maxnum": 1,
+        "preorder": false,
+        "ins": false,
+        "distance": 5.853773155,
+        "priority": 3
+    },
+    "TABLE3": {
+        "id": 3,
+        "row0": 200,
+        "row1": 300,
+        "col0": 200,
+        "col1": 300,
         "maxnum": 2,
-        "preorder": false,        
-        "ins": false
+        "preorder": false,
+        "ins": false,
+        "distance": 8.895944269,
+        "priority": 2
+    },
+    "TABLE4": {
+        "id": 4,
+        "row0": 200,
+        "row1": 300,
+        "col0": 200,
+        "col1": 300,
+        "maxnum": 3,
+        "preorder": false,
+        "ins": false,
+        "distance": 4.076090773,
+        "priority": 2
     }
 }
