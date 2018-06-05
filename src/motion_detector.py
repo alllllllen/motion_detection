@@ -43,7 +43,8 @@ class Motion_detector:
                 #     tmp = {'ins': False}
                 #     self.update_info_of_table.update(tmp)
                 #     self.count_false = 0
-                tmp = {'ins': False}
+                remaining_number = self.table['maxnum']
+                tmp = {'ins': False, 'remaining_number': remaining_number}
                 self.update_info_of_table.update(tmp)
                 continue
             tmp = {'ins': True}
@@ -66,7 +67,7 @@ class Motion:
         if self.motion_detector:
             cv_image = self.bridge.imgmsg_to_cv2(image, "bgr8")
             # result_img = self.motion_detector.detect(cv_image[info_of_table[self.table]["row0"]:info_of_table[self.table]["row1"], info_of_table[self.table]["col0"]:info_of_table[self.table]["col1"]])
-            result_img = self.motion_detector.detect(cv_image[self.table["col0"]:self.table["col1"], self.table["row0"]:self.table["row1"]])
+            result_img = self.motion_detector.detect(cv_image[self.table['col0']:self.table['col1'], self.table['row0']:self.table['row1']])
             image = self.bridge.cv2_to_imgmsg(result_img, "bgr8")
         self.pub.publish(image)
 
@@ -76,7 +77,8 @@ def shutdown():
     for table in info_of_tables:
         table = table.to_dict()
         path = 'Tables/'+table['tablename']
-        db.document(path).update({'ins': False, 'preorder': False})
+        recovery_remaining_number = table['maxnum']
+        db.document(path).update({'ins': False, 'preorder': False, 'remaining_number': recovery_remaining_number})
   
 if __name__ == '__main__':
     rospy.init_node("MotionDetection")
