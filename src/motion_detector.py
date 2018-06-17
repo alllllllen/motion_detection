@@ -37,18 +37,31 @@ class Motion_detector:
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel, iterations=2)
         _cntImg, cnts, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in cnts:
-            if cv2.contourArea(c) < 500:
-                # self.count_false = self.count_false+1
-                # if self.count_false > 5:
-                #     tmp = {'ins': False}
-                #     self.update_info_of_table.update(tmp)
-                #     self.count_false = 0
-                remaining_number = self.table['maxnum']
-                tmp = {'ins': False, 'remaining_number': remaining_number}
-                self.update_info_of_table.update(tmp)
+            if (cv2.contourArea(c) < 500) and (self.table['ins'] == True):
+                self.count_false = self.count_false + 1
+
+                if self.table['tablename'] == 'TABLE1':
+                    rospy.logfatal(self.count_false)
+                
+                if self.count_false > 150:
+                    remaining_number = self.table['maxnum']
+                    self.table['ins'] = False
+                    self.count_false = 0
+                    tmp = {'ins': False, 'remaining_number': remaining_number}
+                    self.update_info_of_table.update(tmp)
+                    continue
                 continue
-            tmp = {'ins': True}
-            self.update_info_of_table.update(tmp)
+            if (cv2.contourArea(c) >= 500) and (self.table['ins'] == False):
+                self.count_true = self.count_true + 1
+                
+                if self.table['tablename'] == 'TABLE1':
+                    rospy.logfatal(self.count_true)
+                
+                if self.count_true > 5:
+                    self.table['ins'] = True
+                    self.count_true = 0
+                    tmp = {'ins': True}
+                    self.update_info_of_table.update(tmp)
             (x, y, w, h) = cv2.boundingRect(c)
             cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
             # cv2.drawContours(image, cnts, -1, (0, 255, 255), 2)
