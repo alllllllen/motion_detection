@@ -9,7 +9,7 @@
     <param name="pixel_format" value="yuyv" />
     <param name="camera_frame_id" value="usb_cam" />
     <param name="io_method" value="mmap"/>
-    <param name="framerate" value="1"/>
+    <param name="framerate" value="30"/>
   </node>
   <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find motion_detection)/rviz/motion.rviz" />
 </launch>
