@@ -31,7 +31,7 @@ class Motion_detector:
             return image
             # diff = cv2.absdiff(self.avg, blur)
         gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
-        _ret, thresh = cv2.threshold(gray, 25, 255, cv2.THRESH_BINARY)
+        _ret, thresh = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
         kernel = np.ones((5, 5), np.uint8)
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=2)
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel, iterations=2)
